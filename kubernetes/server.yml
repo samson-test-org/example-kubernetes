@@ -1,0 +1,41 @@
+# keep all files in sync ... check test/integration/kubernetes_test.rb
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: example-server
+  labels:
+    project: example
+    role: server
+spec:
+  selector:
+    matchLabels:
+      project: example
+      role: server
+  template:
+    metadata:
+      labels:
+        project: example
+        role: server
+      annotations:
+        samson/required_env: >
+          RAILS_ENV
+    spec:
+      securityContext:
+        readOnlyRootFilesystem: true
+        runAsNonRoot: true
+      containers:
+      - name: default
+        image: replaced-by-samson
+        resources:
+          requests:
+            cpu: '0.1'
+            memory: '100Mi'
+          limits:
+            cpu: '0.5'
+            memory: '300Mi'
+        env:
+        - name: SERVE_STATIC_ASSETS
+          value: 'true'
+        - name: RAILS_LOG_TO_STDOUT
+          value: 'true'
