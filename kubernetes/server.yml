@@ -27,6 +27,7 @@ spec:
       containers:
       - name: default
         image: replaced-by-samson
+        imagePullPolicy: Never
         resources:
           requests:
             cpu: '0.1'

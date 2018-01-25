@@ -19,6 +19,7 @@ spec:
   containers:
   - name: default
     image: replaced-by-samson
+    imagePullPolicy: Never
     args: ["ruby", "-e", "puts 'MIGRATE'"]
     resources:
       requests:
