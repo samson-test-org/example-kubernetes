@@ -14,6 +14,7 @@ ADD bin bin
 ADD test test
 ADD kubernetes kubernetes
 
-USER nobody
+# Run as unprivileged user "nobody" (names do not satisfy runAsNonRoot)
+USER 65534
 
 CMD ["bin/run.rb"]
