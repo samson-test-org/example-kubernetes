@@ -1,41 +1,33 @@
 # keep all files in sync ... check test/integration/kubernetes_test.rb
----
-apiVersion: extensions/v1beta1
-kind: Deployment
+apiVersion: batch/v1beta1
+kind: CronJob
 metadata:
-  name: example-server
+  name: hello
   labels:
     project: example
     role: server
+    a: a
 spec:
-  selector:
-    matchLabels:
-      project: example
-      role: server
-  template:
+  schedule: "*/1 * * * *"
+  jobTemplate:
     metadata:
       labels:
         project: example
         role: server
-      annotations:
-        samson/required_env: >
-          RAILS_ENV
+        b: b
     spec:
-      securityContext:
-        readOnlyRootFilesystem: true
-        runAsNonRoot: true
-      containers:
-      - name: default
-        image: replaced-by-samson
-        resources:
-          requests:
-            cpu: '0.1'
-            memory: '100Mi'
-          limits:
-            cpu: '0.5'
-            memory: '300Mi'
-        env:
-        - name: SERVE_STATIC_ASSETS
-          value: 'true'
-        - name: RAILS_LOG_TO_STDOUT
-          value: 'true'
+      template:
+        metadata:
+          labels:
+            project: example
+            role: server
+            c: c
+        spec:
+          containers:
+          - name: hello
+            image: busybox
+            args:
+            - /bin/sh
+            - -c
+            - date; echo Hello from the Kubernetes cluster
+          restartPolicy: OnFailure
