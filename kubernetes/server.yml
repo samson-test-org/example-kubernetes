@@ -51,6 +51,7 @@ metadata:
     project: example
     role: server
     team: foo
+    bar: baz
 spec:
   group: test.com
   names:
