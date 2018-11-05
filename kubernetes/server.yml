@@ -27,6 +27,7 @@ spec:
       containers:
       - name: default
         image: replaced-by-samson
+        command: ["sh", "-c", "echo 111; sleep 1;false"]
         resources:
           requests:
             cpu: '0.1'
