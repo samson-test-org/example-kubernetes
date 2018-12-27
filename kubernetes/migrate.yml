@@ -1,7 +1,6 @@
-# keep all files in sync ... check test/integration/kubernetes_test.rb
 ---
 apiVersion: v1
-kind: Pod
+kind: ConfigMap
 metadata:
   name: example-migrate
   labels:
@@ -10,26 +9,6 @@ metadata:
     team: foo
   annotations:
     samson/prerequisite: 'true'
-    samson/required_env: >
-      RAILS_ENV
-spec:
-  restartPolicy: Never
-  containers:
-  - name: default
-    image: replaced-by-samson
-    args: ["ruby", "-e", "puts 'MIGRATE'"]
-    securityContext:
-      readOnlyRootFilesystem: true
-      runAsNonRoot: true
-    resources:
-      requests:
-        cpu: '0.1'
-        memory: '100Mi'
-      limits:
-        cpu: '0.5'
-        memory: '300Mi'
-    env:
-    - name: SERVE_STATIC_ASSETS
-      value: 'true'
-    - name: RAILS_LOG_TO_STDOUT
-      value: 'true'
+data:
+  data-1: value-1
+  data-2: value-2
