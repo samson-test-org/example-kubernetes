@@ -4,6 +4,8 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: example-server
+  annotations:
+    samson/prerequisite: 'true'
   labels:
     project: example
     role: server
@@ -21,6 +23,7 @@ spec:
       containers:
       - name: default
         image: replaced-by-samson
+        command: ["echo", "hello"]
         resources:
           requests:
             cpu: '0.1'
