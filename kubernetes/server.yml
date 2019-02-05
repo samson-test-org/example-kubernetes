@@ -1,17 +1,13 @@
 # keep all files in sync ... check test/integration/kubernetes_test.rb
 ---
-apiVersion: extensions/v1beta1
-kind: Deployment
+apiVersion: batch/v1
+kind: Job
 metadata:
   name: example-server
   labels:
     project: example
     role: server
 spec:
-  selector:
-    matchLabels:
-      project: example
-      role: server
   template:
     metadata:
       labels:
@@ -21,9 +17,7 @@ spec:
         samson/required_env: >
           RAILS_ENV
     spec:
-      securityContext:
-        readOnlyRootFilesystem: true
-        runAsNonRoot: true
+      restartPolicy: OnFailure # by default 6 tries
       containers:
       - name: default
         image: replaced-by-samson
