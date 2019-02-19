@@ -4,6 +4,8 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: example-server
+  annotations:
+    samson-set-via-env-json-spec.template.metadata.annotations.iam.amazonaws.com/role: IAM_ROLE
   labels:
     project: example
     role: server
@@ -18,8 +20,10 @@ spec:
         project: example
         role: server
       annotations:
+        iam.amazonaws.com/role: iam-arn
         samson/required_env: >
           RAILS_ENV
+          IAM_ROLE
     spec:
       securityContext:
         readOnlyRootFilesystem: true
