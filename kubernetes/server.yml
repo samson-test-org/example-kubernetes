@@ -4,10 +4,13 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: example-server
+  namespace: foo
   labels:
     project: example
     role: server
     team: foo
+  annotations:
+    samson/keep_namespace: 'true'
 spec:
   selector:
     matchLabels:

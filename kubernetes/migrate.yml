@@ -1,15 +1,28 @@
 # keep all files in sync ... check test/integration/kubernetes_test.rb
 ---
 apiVersion: v1
-kind: Pod
+kind: Namespace
 metadata:
-  name: example-migrate
+  name: foo
   labels:
     project: example
     role: migrate
     team: foo
   annotations:
     samson/prerequisite: 'true'
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: example-migrate
+  namespace: foo
+  labels:
+    project: example
+    role: migrate
+    team: foo
+  annotations:
+    samson/prerequisite: 'true'
+    samson/keep_namespace: 'true'
     samson/required_env: >
       RAILS_ENV
 spec:
