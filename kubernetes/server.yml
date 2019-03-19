@@ -1,7 +1,7 @@
 # keep all files in sync ... check test/integration/kubernetes_test.rb
 ---
-apiVersion: extensions/v1beta1
-kind: Deployment
+apiVersion: apps/v1
+kind: DaemonSet
 metadata:
   name: example-server
   labels:
@@ -31,7 +31,7 @@ spec:
         image: replaced-by-samson
         resources:
           requests:
-            cpu: '0.1'
+            cpu: '100'
             memory: '100Mi'
           limits:
             cpu: '0.5'
