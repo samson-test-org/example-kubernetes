@@ -1,7 +1,7 @@
 # keep all files in sync ... check test/integration/kubernetes_test.rb
 ---
 apiVersion: apps/v1
-kind: DaemonSet
+kind: ReplicaSet
 metadata:
   name: example-server
   labels:
