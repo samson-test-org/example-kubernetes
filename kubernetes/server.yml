@@ -25,6 +25,7 @@ spec:
     spec:
       securityContext:
         readOnlyRootFilesystem: true
+        runAsUser: 1
         runAsNonRoot: true
       containers:
       - name: default
