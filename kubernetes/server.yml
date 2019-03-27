@@ -41,3 +41,35 @@ spec:
           value: 'true'
         - name: RAILS_LOG_TO_STDOUT
           value: 'true'
+
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: RoleBinding
+metadata:
+  name: kube-metrics-server-auth-reader
+  annotations:
+    samson/keep_name: 'true'
+  labels:
+    project: example
+    role: server
+    team: foo
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: extension-apiserver-authentication-reader
+
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: RoleBinding
+metadata:
+  name: kube-metrics-server-auth-writer
+  annotations:
+    samson/keep_name: 'true'
+  labels:
+    project: example
+    role: server
+    team: foo
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: extension-apiserver-authentication-reader
