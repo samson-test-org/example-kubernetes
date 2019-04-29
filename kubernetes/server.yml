@@ -24,7 +24,6 @@ spec:
           RAILS_ENV
     spec:
       securityContext:
-        readOnlyRootFilesystem: true
         runAsNonRoot: true
       containers:
       - name: default
