@@ -41,3 +41,18 @@ spec:
           value: 'true'
         - name: RAILS_LOG_TO_STDOUT
           value: 'true'
+      - name: foo
+        image: gcr.io/docker-image-builder-179319/samson/example-kubernetes:latest
+        samson/dockerfile: none
+        resources:
+          requests:
+            cpu: '0.1'
+            memory: '100Mi'
+          limits:
+            cpu: '0.5'
+            memory: '300Mi'
+        env:
+          - name: SERVE_STATIC_ASSETS
+            value: 'true'
+          - name: RAILS_LOG_TO_STDOUT
+            value: 'true'
