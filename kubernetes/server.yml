@@ -8,11 +8,18 @@ metadata:
     project: example
     role: server
     team: foo
+  annotations:
+    samson/set_via_env_json: |
+      spec.strategy.rollingUpdate.maxSurge: DEPLOYMENT_MAX_SURGE
 spec:
   selector:
     matchLabels:
       project: example
       role: server
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 10%
+      maxSurge: DEPLOYMENT_MAX_SURGE
   template:
     metadata:
       labels:
@@ -41,3 +48,4 @@ spec:
           value: 'true'
         - name: RAILS_LOG_TO_STDOUT
           value: 'true'
+
