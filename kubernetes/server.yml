@@ -25,7 +25,7 @@ spec:
     spec:
       containers:
       - name: default
-        image: replaced-by-samson
+        image: replaced_by_samson/example-kubernetes
         securityContext:
           readOnlyRootFilesystem: true
           runAsNonRoot: true
@@ -41,3 +41,14 @@ spec:
           value: 'true'
         - name: RAILS_LOG_TO_STDOUT
           value: 'true'
+      - name: extra
+        image: does-not-exist
+        samson/dockerfile: none
+        samson/preStop: disabled
+        resources:
+          requests:
+            cpu: '0.1'
+            memory: '100Mi'
+          limits:
+            cpu: '0.5'
+            memory: '300Mi'
