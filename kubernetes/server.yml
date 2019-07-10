@@ -44,18 +44,18 @@ spec:
 
 
 ---
-apiVersion: autoscaling/v1
+apiVersion: autoscaling/v2beta2
 kind: HorizontalPodAutoscaler
 metadata:
   labels:
     project: example
     role: server
     team: foo
-  name: hawaii-app-server
+  name: example-hpa
 spec:
   maxReplicas: 4
   minReplicas: 1
   scaleTargetRef:
-    apiVersion: apps/v1
+    apiVersion: extensions/v1beta1
     kind: Deployment
-    name: hawaii-app-server
+    name: example-server
