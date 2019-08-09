@@ -41,3 +41,23 @@ spec:
           value: 'true'
         - name: RAILS_LOG_TO_STDOUT
           value: 'true'
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: example-server
+  labels:
+    project: example
+    role: server
+    team: foo
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: example-server
+  labels:
+    project: example
+    role: server
+    team: foo
