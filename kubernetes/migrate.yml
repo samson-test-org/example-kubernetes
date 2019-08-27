@@ -14,13 +14,13 @@ metadata:
       RAILS_ENV
 spec:
   restartPolicy: Never
-  securityContext:
-    readOnlyRootFilesystem: true
-    runAsNonRoot: true
   containers:
   - name: default
     image: replaced-by-samson
     args: ["ruby", "-e", "puts 'MIGRATE'"]
+    securityContext:
+      readOnlyRootFilesystem: true
+      runAsNonRoot: true
     resources:
       requests:
         cpu: '0.1'

@@ -1,6 +1,6 @@
 # keep all files in sync ... check test/integration/kubernetes_test.rb
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: example-server
@@ -23,12 +23,12 @@ spec:
         samson/required_env: >
           RAILS_ENV
     spec:
-      securityContext:
-        readOnlyRootFilesystem: true
-        runAsNonRoot: true
       containers:
       - name: default
         image: replaced-by-samson
+        securityContext:
+          readOnlyRootFilesystem: true
+          runAsNonRoot: true
         resources:
           requests:
             cpu: '0.1'
