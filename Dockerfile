@@ -1,5 +1,5 @@
-# FROM ruby:2.4.2-alpine3.7
-FROM ruby@sha256:01768232842e9686435f59619e67107a9735cbed999df55b6a85de18f96ed6de
+# FROM ruby:2.6.3-alpine3.10
+FROM ruby:2.6.3-alpine3.10@sha256:a546d6c5f530bbcc2d41fbf0da21d94da9f70cba2997c82b57b06ea6a2ef155d
 
 RUN mkdir /app && \
   apk add --update --no-cache bash su-exec dumb-init build-base
