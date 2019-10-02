@@ -26,6 +26,7 @@ spec:
         samson/required_env: >
           RAILS_ENV
     spec:
+      priorityClassName: noooped
       containers:
       - name: default
         securityContext:
