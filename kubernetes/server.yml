@@ -26,12 +26,12 @@ spec:
         samson/required_env: >
           RAILS_ENV
     spec:
-      securityContext:
-        readOnlyRootFilesystem: true
-        runAsUser: 1
-        runAsNonRoot: true
       containers:
       - name: default
+        securityContext:
+          readOnlyRootFilesystem: true
+          runAsUser: 1
+          runAsNonRoot: true
         image: replaced-by-samson
         resources:
           requests:
