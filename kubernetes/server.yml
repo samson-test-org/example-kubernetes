@@ -9,6 +9,9 @@ metadata:
     role: server
     team: foo
 spec:
+  updateStrategy:
+    rollingUpdate:
+      maxUnavailable: '25%'
   selector:
     matchLabels:
       project: example
