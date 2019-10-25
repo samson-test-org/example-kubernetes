@@ -41,3 +41,26 @@ spec:
           value: 'true'
         - name: RAILS_LOG_TO_STDOUT
           value: 'true'
+        ports:
+        - name: http-port
+          containerPort: 23859
+          protocol: TCP
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: example
+  labels:
+    project: example
+    role: server
+    team: foo
+  annotations:
+    samson/persistent_fields: metadata.labels.consul-tag-primary, metadata.labels.consul-tag-secondary
+spec:
+  ports:
+  - port: 80
+    targetPort: http-port
+  selector:
+    project: example
+    role: server
