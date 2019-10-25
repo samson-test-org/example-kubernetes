@@ -60,9 +60,9 @@ metadata:
 spec:
   type: LoadBalancer
   externalTrafficPolicy: Local
-  healthCheckNodePort: 30123
+  healthCheckNodePort: 30124
   ports:
-  - port: 30123
+  - port: 30124
     targetPort: http-port
   selector:
     project: example
