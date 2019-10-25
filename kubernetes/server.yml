@@ -58,8 +58,11 @@ metadata:
   annotations:
     samson/persistent_fields: metadata.labels.consul-tag-primary, metadata.labels.consul-tag-secondary
 spec:
+  type: LoadBalancer
+  externalTrafficPolicy: Local
+  healthCheckNodePort: 30123
   ports:
-  - port: 80
+  - port: 30123
     targetPort: http-port
   selector:
     project: example
