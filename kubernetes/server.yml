@@ -41,3 +41,13 @@ spec:
           value: 'true'
         - name: RAILS_LOG_TO_STDOUT
           value: 'true'
+
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  labels:
+    project: example
+    role: server
+    team: foo
+  name: example-server
