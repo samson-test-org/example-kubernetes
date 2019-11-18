@@ -36,6 +36,12 @@ spec:
           limits:
             cpu: '0.5'
             memory: '300Mi'
+        readinessProbe:
+          httpGet:
+            path: /fail
+            port: 8888
+          initialDelaySeconds: 1
+          periodSeconds: 1
         env:
         - name: SERVE_STATIC_ASSETS
           value: 'true'
