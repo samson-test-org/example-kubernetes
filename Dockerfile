@@ -14,6 +14,8 @@ ADD bin bin
 ADD test test
 ADD kubernetes kubernetes
 
+EXPOSE 8080
+
 # Run as unprivileged user "nobody" (names do not satisfy runAsNonRoot)
 USER 65534
 

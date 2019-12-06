@@ -42,9 +42,9 @@ spec:
         - name: RAILS_LOG_TO_STDOUT
           value: 'true'
         ports:
-          - name: http-port
-            containerPort: 23859
-            protocol: TCP
+        - name: http-port
+          containerPort: 8080
+          protocol: TCP
 
 ---
 apiVersion: v1

@@ -3,9 +3,11 @@
 require 'bundler/setup'
 
 STDOUT.sync = true # we want responsive logs
-Thread.abort_on_exception = true
+require 'rack'
 
-loop do
-  puts "Running #{ENV.fetch("RAILS_ENV")}"
-  sleep 1
+app = Proc.new do |env|
+  puts "GOT REQUEST!"
+  ['200', {'Content-Type' => 'text/html'}, ['HELLO']]
 end
+
+Rack::Handler::WEBrick.run app
