@@ -1,43 +1,80 @@
 # keep all files in sync ... check test/integration/kubernetes_test.rb
 ---
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: zendesk.com/v1alpha1
+kind: ShardedDeployment
 metadata:
-  name: example-server
+  name: foo
   labels:
     project: example
     role: server
     team: foo
+  annotations:
+    samson/set_via_env_json-spec.shards.list: SPEC_SHARDS_LIST
 spec:
-  selector:
-    matchLabels:
-      project: example
-      role: server
-  template:
+  shards:
+    list: ["a", "b", "c"]
+  deploymentTemplate:
     metadata:
+      # name: foo-a | foo-b | foo-c
       labels:
         project: example
         role: server
         team: foo
+        # shard: a | b | c
       annotations:
         samson/required_env: >
           RAILS_ENV
     spec:
-      containers:
-      - name: default
-        image: replaced-by-samson
-        securityContext:
-          readOnlyRootFilesystem: true
-          runAsNonRoot: true
-        resources:
-          requests:
-            cpu: '0.1'
-            memory: '100Mi'
-          limits:
-            cpu: '0.5'
-            memory: '300Mi'
-        env:
-        - name: SERVE_STATIC_ASSETS
-          value: 'true'
-        - name: RAILS_LOG_TO_STDOUT
-          value: 'true'
+      replicas: 1
+      selector:
+        matchLabels:
+          project: example
+          role: server
+          # shard: a | b | c
+      template:
+        metadata:
+          name: foo
+          labels:
+            project: example
+            role: server
+            team: foo
+            # shard: a | b | c
+        spec:
+          containers:
+          - name: default
+            image: replaced-by-samson
+            securityContext:
+              readOnlyRootFilesystem: true
+              runAsNonRoot: true
+            resources:
+              requests:
+                cpu: '0.1'
+                memory: '100Mi'
+              limits:
+                cpu: '0.5'
+                memory: '300Mi'
+            env:
+            - name: SERVE_STATIC_ASSETS
+              value: 'true'
+            - name: RAILS_LOG_TO_STDOUT
+              value: 'true'
+            # - name: SHARD
+            #   value: a | b | c
+  serviceTemplate:
+    metadata:
+      # name: foo-a | foo-b | foo-c
+      labels:
+        project: example
+        role: server
+        team: foo
+        # shard: a | b | c
+    spec:
+      type: NodePort
+      ports:
+        - port: 80
+          targetPort: diagnostic
+      selector:
+        project: example
+        role: server
+        # shard: a | b | c
+
