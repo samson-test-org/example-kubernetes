@@ -17,7 +17,7 @@ spec:
     matchLabels:
       project: example
       role: server
-  serviceName: "foo"
+#  serviceName: "foo"
   template:
     metadata:
       labels:
@@ -27,15 +27,15 @@ spec:
       annotations:
         samson/required_env: >
           RAILS_ENV
+        container-default-samson/dockerfile: "none"
     spec:
       containers:
       - name: default
         image: busybox # need this since I'm testing on minikube
-        samson/dockerfile: "none"
         args: ["sleep", "999"]
         securityContext:
           readOnlyRootFilesystem: true
-          runAsNonRoot: true
+#          runAsNonRoot: true
         resources:
           requests:
             cpu: '0.1'
