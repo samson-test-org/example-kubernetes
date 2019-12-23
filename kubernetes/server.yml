@@ -15,6 +15,7 @@ spec:
     matchLabels:
       project: example
       role: server
+  serviceName: "foo"
   template:
     metadata:
       labels:
