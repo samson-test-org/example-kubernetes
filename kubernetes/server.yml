@@ -30,7 +30,9 @@ spec:
     spec:
       containers:
       - name: default
-        image: replaced-by-samson
+        image: busybox # need this since I'm testing on minikube
+        samson/dockerfile: "none"
+        args: ["sleep", "999"]
         securityContext:
           readOnlyRootFilesystem: true
           runAsNonRoot: true
