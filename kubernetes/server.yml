@@ -10,7 +10,7 @@ metadata:
     team: foo
 spec:
   updateStrategy:
-    type: RollingUpdate
+    type: OnDelete
   selector:
     matchLabels:
       project: example
