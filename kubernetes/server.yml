@@ -4,6 +4,8 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: example-server
+  annotations:
+    samson/force_update: "true"
   labels:
     project: example
     role: server
@@ -15,7 +17,7 @@ spec:
     matchLabels:
       project: example
       role: server
-  serviceName: "foo"
+  serviceName: "bar"
   template:
     metadata:
       labels:
