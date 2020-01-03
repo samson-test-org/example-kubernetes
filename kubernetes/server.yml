@@ -4,8 +4,6 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: example-server
-  annotations:
-    samson/server_side_apply: "true"
   labels:
     project: example
     role: server
