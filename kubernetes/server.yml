@@ -8,6 +8,8 @@ metadata:
     project: example
     role: server
     team: foo
+  annotations:
+    samson/minAvailable: '30%'
 spec:
   updateStrategy:
     type: RollingUpdate
