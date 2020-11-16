@@ -31,10 +31,10 @@ spec:
           runAsNonRoot: true
         resources:
           requests:
-            cpu: '0.1'
+            cpu: 0.1
             memory: '100Mi'
           limits:
-            cpu: '0.5'
+            cpu: 1
             memory: '300Mi'
         env:
         - name: SERVE_STATIC_ASSETS
