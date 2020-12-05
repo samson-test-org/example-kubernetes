@@ -8,6 +8,8 @@ metadata:
     project: example
     role: server
     team: foo
+  annotations:
+    samson/recreate: "true"
 spec:
   updateStrategy:
     type: RollingUpdate
