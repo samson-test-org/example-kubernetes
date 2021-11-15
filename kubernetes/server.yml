@@ -1,43 +1,79 @@
-# keep all files in sync ... check test/integration/kubernetes_test.rb
 ---
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
 metadata:
-  name: example-server
+  name: k8sreservednamespace
   labels:
     project: example
-    role: server
-    team: foo
+    role: policies
+  annotations:
+    samson/keep_name: "true"
 spec:
-  selector:
-    matchLabels:
-      project: example
-      role: server
-  template:
-    metadata:
-      labels:
-        project: example
-        role: server
-        team: foo
-      annotations:
-        samson/required_env: >
-          RAILS_ENV
+  crd:
     spec:
-      containers:
-      - name: default
-        image: replaced-by-samson
-        securityContext:
-          readOnlyRootFilesystem: true
-          runAsNonRoot: true
-        resources:
-          requests:
-            cpu: '0.1'
-            memory: '100Mi'
-          limits:
-            cpu: '0.5'
-            memory: '300Mi'
-        env:
-        - name: SERVE_STATIC_ASSETS
-          value: 'true'
-        - name: RAILS_LOG_TO_STDOUT
-          value: 'true'
+      names:
+        kind: K8sReservedNamespace
+      validation:
+        # Schema for the `parameters` field
+        openAPIV3Schema:
+          properties:
+            names:
+              type: array
+              items: string
+            help:
+              type: string
+  targets:
+  - target: admission.k8s.gatekeeper.sh
+    rego: |
+      package k8sreservednamespace
+      import data.lib.utils
+
+      violation[{"msg": msg}] {
+        input.review.object.metadata.namespace = input.parameters.names[_]
+        msg := sprintf(
+          "zendesk/opa-gatekeeper %v %v %v: %v",
+          [input.review.object.kind, input.review.object.metadata.namespace, input.review.object.metadata.name, utils.help]
+        )
+      }
+    libs:
+    - |
+      # Meant for super small generic helpers that are often used
+      package lib.utils
+
+      # use "" for namespace-less resources so message generation does not fail
+      default input_namespace = ""
+      input_namespace = ns { ns := input.review.object.metadata.namespace }
+
+      # dont break tests on missing help
+      help = h { h := input.parameters.help }
+      help = "" { not input.parameters.help }
+
+      opt_out(object, rule_name) {
+        label := concat("/", ["opa-gatekeeper.zendesk.com", rule_name])
+        not object.metadata.labels[label] == "false"
+      }
+
+      array_contains(a, e) {
+        a[_] = e
+      }
+
+---
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sReservedNamespace
+metadata:
+  name: default-is-reserved
+  labels:
+    project: example
+    role: policies
+  annotations:
+    description: test
+    samson/keep_name: "true"
+spec:
+  parameters:
+    names: ["default"]
+    help: test
+  match:
+    kinds:
+    - apiGroups: ["*"]
+      kinds:
+      - Service
