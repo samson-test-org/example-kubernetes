@@ -1,5 +1,5 @@
-# FROM ruby:2.6.3-alpine3.10
-FROM ruby:2.6.3-alpine3.10@sha256:a546d6c5f530bbcc2d41fbf0da21d94da9f70cba2997c82b57b06ea6a2ef155d
+# match .ruby-version
+FROM ruby:3.1.2-alpine
 
 RUN mkdir /app && \
   apk add --update --no-cache bash su-exec dumb-init build-base
