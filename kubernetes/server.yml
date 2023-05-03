@@ -8,6 +8,9 @@ metadata:
     project: example
     role: server
     team: foo
+  annotations:
+    samson/NoReplicas: "true"
+    samson/server_side_apply: "true"
 spec:
   selector:
     matchLabels:
